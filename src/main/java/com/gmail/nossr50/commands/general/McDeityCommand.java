@@ -5,31 +5,14 @@
 package com.gmail.nossr50.commands.general;
 
 import com.gmail.nossr50.Users;
-import com.gmail.nossr50.datatypes.DeityProfile;
 import com.gmail.nossr50.datatypes.PlayerProfile;
 import com.gmail.nossr50.datatypes.SkillType;
-import com.gmail.nossr50.commands.skills.*;
-import com.gmail.nossr50.commands.spout.*;
-import com.gmail.nossr50.commands.mc.*;
-import com.gmail.nossr50.commands.party.*;
-import com.gmail.nossr50.commands.general.*;
-import com.gmail.nossr50.config.*;
-import com.gmail.nossr50.runnables.*;
 import com.gmail.nossr50.skills.Skills;
-import com.gmail.nossr50.spout.SpoutStuff;
-import com.gmail.nossr50.listeners.mcBlockListener;
-import com.gmail.nossr50.listeners.mcEntityListener;
-import com.gmail.nossr50.listeners.mcPlayerListener;
-import com.gmail.nossr50.locale.mcLocale;
-import com.gmail.nossr50.m;
-import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.mcPermissions;
-import com.gmail.nossr50.party.Party;
 import com.gmail.nossr50.config.LoadProperties;
-import com.gmail.nossr50.datatypes.AbilityType;
+
 
 import java.util.Scanner;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,26 +21,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.getspout.spoutapi.SpoutManager;
-import org.getspout.spoutapi.player.FileManager;
 
 /**
  *
