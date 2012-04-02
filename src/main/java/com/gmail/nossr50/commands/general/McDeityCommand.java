@@ -90,7 +90,7 @@ public class McDeityCommand implements CommandExecutor{
                                 sender.sendMessage("This command requires permissions. Only Admins may create deities");
                                 return true;
                             }
-                            if(args.length!=5){
+                            if(args.length>6){
                                 player.sendMessage(ChatColor.RED + " Usage: /deity create deityname PositiveSkill PositiveSkill NegativeSkill NegativeSkill");
                                 return true;
                             }
