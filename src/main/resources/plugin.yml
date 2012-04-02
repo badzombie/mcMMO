@@ -27,6 +27,10 @@ commands:
     addlevels:
         description: Add levels to a user
         permission: mcmmo.tools.mmoedit
+    deity:
+        description: Deities command
+    loselevels:
+        description: Lose levels to self
     mcability:
         description: Toggle whether or not abilities get readied on right click
         permission: mcmmo.commands.ability

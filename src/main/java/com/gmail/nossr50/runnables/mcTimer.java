@@ -44,7 +44,7 @@ public class mcTimer implements Runnable
 			Skills.monitorSkill(player, PP, curTime, SkillType.SWORDS);
 			Skills.monitorSkill(player, PP, curTime, SkillType.UNARMED);
 			Skills.monitorSkill(player, PP, curTime, SkillType.WOODCUTTING);
-			
+			//Skills.monitorSkill(player, PP, curTime, SkillType.DEATH_TIMER);
 			/*
 			 * COOLDOWN MONITORING
 			 */
@@ -56,7 +56,7 @@ public class mcTimer implements Runnable
 			Skills.watchCooldown(player, PP, curTime, AbilityType.BERSERK);
 			Skills.watchCooldown(player, PP, curTime, AbilityType.TREE_FELLER);
 			Skills.watchCooldown(player, PP, curTime, AbilityType.BLAST_MINING);
-			
+			//Skills.watchCooldown(player, PP, curTime, AbilityType.DEATH_TIMER);
 			/*
 			 * PLAYER BLEED MONITORING
 			 */

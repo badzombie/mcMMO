@@ -18,7 +18,7 @@ public class McMMOPlayerLevelUpEvent extends Event {
 		this.player = player;
 		this.skill = skill;
 		this.levelsGained = 1;	// Always 1 for now as we call in the loop where the levelups are calculated, could change later!
-	}
+                }
 	
 	/**
 	 * @return Player leveling up

@@ -40,8 +40,10 @@ public class PlayerProfile
 	//MySQL STUFF
 	private int xpbarinc=0, lastlogin=0, userid = 0, bleedticks = 0;
 	
-	private String playerName;
+	private String playerName, deityName;
 	
+        private long deathDATS;
+        
 	//Time to HashMap this shiz
 	HashMap<SkillType, Integer> skills = new HashMap<SkillType, Integer>(); //Skills and XP
 	HashMap<SkillType, Integer> skillsXp = new HashMap<SkillType, Integer>(); //Skills and XP
@@ -53,6 +55,7 @@ public class PlayerProfile
 	{
 		hud = LoadProperties.defaulthud;
 		//Setup the HashMap for ability DATS
+                deathDATS=0;
 		for(AbilityType abilityType : AbilityType.values())
 		{
 		    skillsDATS.put(abilityType, 0);
@@ -129,6 +132,7 @@ public class PlayerProfile
 		if(id == 0)
 			return false;
 		this.userid = id;
+                this.deityName=mcMMO.database.getString("SELECT deity FROM "+LoadProperties.MySQLtablePrefix+"users WHERE user = '" + playerName + "'");
 		if (id > 0) {
 			HashMap<Integer, ArrayList<String>> huds = mcMMO.database.read("SELECT hudtype FROM "+LoadProperties.MySQLtablePrefix+"huds WHERE user_id = " + id);
 			if(huds.get(1) == null)
@@ -221,6 +225,7 @@ public class PlayerProfile
         	FileReader file = new FileReader(location);
         	BufferedReader in = new BufferedReader(file);
         	String line = "";
+                this.setDeityName("");
         	while((line = in.readLine()) != null)
         	{
         		//Find if the line contains the player we want.
@@ -327,6 +332,7 @@ public class PlayerProfile
     		mcMMO.database.write("UPDATE "+LoadProperties.MySQLtablePrefix+"huds SET "
     				+" hudtype = '"+hud.toString()+"' WHERE user_id = "+this.userid);
     		mcMMO.database.write("UPDATE "+LoadProperties.MySQLtablePrefix+"users SET lastlogin = " + timestamp.intValue() + " WHERE id = " + this.userid);
+                mcMMO.database.write("UPDATE "+LoadProperties.MySQLtablePrefix+"users SET deity = " + this.deityName + " WHERE id = " + this.userid);
     		mcMMO.database.write("UPDATE "+LoadProperties.MySQLtablePrefix+"users SET party = '"+this.party+"' WHERE id = " +this.userid);
     		mcMMO.database.write("UPDATE "+LoadProperties.MySQLtablePrefix+"cooldowns SET "
     				+" mining = " + skillsDATS.get(AbilityType.SUPER_BREAKER)
@@ -858,6 +864,14 @@ public class PlayerProfile
 		//long convertedBack = skillsDATS.get(abilityType) * 1000;
         return skillsDATS.get(abilityType);
     }
+        public long getDeathDATS(){
+            return deathDATS;
+        }
+    public void setDeathDATS(long value)
+    {
+        int wearsOff = (int) (value * .001D);
+        deathDATS=wearsOff;
+    }
     public void setSkillDATS(AbilityType abilityType, long value)
     {
         int wearsOff = (int) (value * .001D);
@@ -929,9 +943,16 @@ public class PlayerProfile
 	 */
 	public void addXP(SkillType skillType, int newvalue, Player thisplayer)
 	{
-		if(System.currentTimeMillis() < ((xpGainATS*1000)+250) || thisplayer.getGameMode() == GameMode.CREATIVE)
+                
+		if(System.currentTimeMillis() < ((xpGainATS*1000)+250) || thisplayer.getGameMode() == GameMode.CREATIVE){
 			return;
-		
+                }
+                PlayerProfile PP = Users.getProfile(thisplayer);
+                if(m.getPowerLevel(thisplayer, PP) >= LoadProperties.maxLevel){
+                    //thisplayer.sendMessage("You are at max level at" + m.getPowerLevel(thisplayer, PP) );
+                    return;
+                }
+                
 		//Setup a timestamp of when xp was given
 		xpGainATS = (int) (System.currentTimeMillis()/1000);
 		
@@ -1165,5 +1186,19 @@ public class PlayerProfile
     public String getPlayerName()
     {
         return playerName;
+    }
+
+    /**
+     * @return the deityName
+     */
+    public String getDeityName() {
+        return deityName;
+    }
+
+    /**
+     * @param deityName the deityName to set
+     */
+    public void setDeityName(String deityName) {
+        this.deityName = deityName;
     }
 }	

@@ -20,8 +20,10 @@ public enum AbilityType
 	TREE_FELLER(LoadProperties.treeFellerCooldown, mcLocale.getString("Skills.TreeFellerOn"), mcLocale.getString("Skills.TreeFellerOff"), "Skills.TreeFellerPlayer", mcLocale.getString("Skills.YourTreeFeller"), "Skills.TreeFellerPlayerOff"),
 	SERRATED_STRIKES(LoadProperties.skullSplitterCooldown, mcLocale.getString("Skills.SerratedStrikesOn"), mcLocale.getString("Skills.SerratedStrikesOff"), "Skills.SerratedStrikesPlayer", mcLocale.getString("Skills.YourSerratedStrikes"), "Skills.SerratedStrikesPlayerOff"),
 	BLAST_MINING(LoadProperties.blastMiningCooldown, null, null, "Skills.BlastMiningPlayer", mcLocale.getString("Skills.YourBlastMining"), null),
-	LEAF_BLOWER(0, null, null, null, null, null);
-
+	//DEATH_TIMER(LoadProperties.deathLossCooldown, null, null, null, null, null),
+        LEAF_BLOWER(0, null, null, null, null, null);
+        
+   
 	private int cooldown;
 	private String abilityOn;
 	private String abilityOff;
@@ -196,7 +198,7 @@ public enum AbilityType
 			return mcPermissions.getInstance().miningAbility(player);
 		case TREE_FELLER:
 			return mcPermissions.getInstance().woodCuttingAbility(player);
-		}
+                }
 		return false;
 	}
 	

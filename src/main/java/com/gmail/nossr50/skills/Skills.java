@@ -101,7 +101,7 @@ public class Skills {
                 if (LoadProperties.enableAbilityMessages) {
                     player.sendMessage(tool.getRaiseTool());
                 }
-
+                                                                  
                 tool.setToolATS(PP, System.currentTimeMillis());
                 tool.setToolMode(PP, true);
             }

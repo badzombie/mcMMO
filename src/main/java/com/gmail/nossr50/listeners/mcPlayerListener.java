@@ -1,5 +1,6 @@
 package com.gmail.nossr50.listeners;
 
+import com.gmail.nossr50.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,15 +21,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+
 import org.bukkit.inventory.ItemStack;
 
-import com.gmail.nossr50.BlockChecks;
-import com.gmail.nossr50.Combat;
-import com.gmail.nossr50.Item;
-import com.gmail.nossr50.ItemChecks;
-import com.gmail.nossr50.Users;
-import com.gmail.nossr50.mcMMO;
-import com.gmail.nossr50.mcPermissions;
+import com.gmail.nossr50.runnables.mcTimer;
+import com.gmail.nossr50.datatypes.AbilityType;
 import com.gmail.nossr50.commands.general.XprateCommand;
 import com.gmail.nossr50.config.LoadProperties;
 import com.gmail.nossr50.runnables.RemoveProfileFromMemoryTask;
@@ -43,10 +41,12 @@ import com.gmail.nossr50.skills.Herbalism;
 import com.gmail.nossr50.skills.Repair;
 import com.gmail.nossr50.skills.Skills;
 import com.gmail.nossr50.skills.Taming;
+import com.gmail.nossr50.skills.Skills;
+import com.gmail.nossr50.runnables.DeathTimer;
 
 public class mcPlayerListener implements Listener {
     private mcMMO plugin;
-
+    private final static int TIME_CONVERSION_FACTOR = 1000;
     public mcPlayerListener(mcMMO instance) {
         plugin = instance;
     }
@@ -56,6 +56,47 @@ public class mcPlayerListener implements Listener {
      *
      * @param event The event to watch
      */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        PlayerProfile PP = Users.getProfile(player);
+//        if (!(Skills.cooldownOver(PP.getSkillDATS(AbilityType.DEATH_TIMER), AbilityType.DEATH_TIMER.getCooldown()))) {
+//             
+//            player.sendMessage("Time till next death penalty" + ChatColor.YELLOW + " (" + Skills.calculateTimeLeft(PP.getSkillDATS(AbilityType.DEATH_TIMER) * TIME_CONVERSION_FACTOR, AbilityType.DEATH_TIMER.getCooldown()) + "s)");
+//                //player.sendMessage(ability.getAbilityOn());
+//            return;
+//
+//                
+//               // ability.setMode(PP, true);
+//        }
+        
+ //       PP.setSkillDATS(AbilityType.DEATH_TIMER, System.currentTimeMillis());
+        
+
+        if(!DeathTimer.cooldownOver(PP.getDeathDATS() * TIME_CONVERSION_FACTOR, LoadProperties.deathLossCooldown)) {
+               // player.sendMessage(PP.getDeathDATS() + " " + LoadProperties.deathLossCooldown + " " + System.currentTimeMillis());
+               // player.sendMessage("Time till next death penalty" + ChatColor.YELLOW + " (" + DeathTimer.calculateTimeLeft(PP.getDeathDATS() *TIME_CONVERSION_FACTOR, LoadProperties.deathLossCooldown) * TIME_CONVERSION_FACTOR + "s)");
+                return;
+        }
+        player.sendMessage("You have lost "+(LoadProperties.deathLoss*100)+"% of your levels");
+        PP.modifyskill(SkillType.ACROBATICS, (int) (PP.getSkillLevel(SkillType.ACROBATICS )-(PP.getSkillLevel(SkillType.ACROBATICS )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.ARCHERY, (int) (PP.getSkillLevel(SkillType.ARCHERY )-(PP.getSkillLevel(SkillType.ARCHERY )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.AXES, (int) (PP.getSkillLevel(SkillType.AXES )-(PP.getSkillLevel(SkillType.AXES )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.EXCAVATION, (int) (PP.getSkillLevel(SkillType.EXCAVATION )-(PP.getSkillLevel(SkillType.EXCAVATION )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.FISHING, (int) (PP.getSkillLevel(SkillType.FISHING )-(PP.getSkillLevel(SkillType.FISHING )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.HERBALISM, (int) (PP.getSkillLevel(SkillType.HERBALISM )-(PP.getSkillLevel(SkillType.HERBALISM )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.MINING, (int) (PP.getSkillLevel(SkillType.MINING )-(PP.getSkillLevel(SkillType.MINING )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.REPAIR, (int) (PP.getSkillLevel(SkillType.REPAIR )-(PP.getSkillLevel(SkillType.REPAIR )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.SWORDS, (int) (PP.getSkillLevel(SkillType.SWORDS )-(PP.getSkillLevel(SkillType.SWORDS )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.TAMING, (int) (PP.getSkillLevel(SkillType.TAMING )-(PP.getSkillLevel(SkillType.TAMING )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.UNARMED, (int) (PP.getSkillLevel(SkillType.UNARMED )-(PP.getSkillLevel(SkillType.UNARMED )*LoadProperties.deathLoss)));
+        PP.modifyskill(SkillType.WOODCUTTING, (int) (PP.getSkillLevel(SkillType.WOODCUTTING )-(PP.getSkillLevel(SkillType.WOODCUTTING )*LoadProperties.deathLoss)));
+        player.sendMessage("Time till next death penalty: " + LoadProperties.deathLossCooldown);
+        PP.setDeathDATS(System.currentTimeMillis());
+    }
+    
+    
+    
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerWorldChangeEvent(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();

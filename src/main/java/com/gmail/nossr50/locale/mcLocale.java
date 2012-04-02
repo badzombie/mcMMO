@@ -25,12 +25,13 @@ public class mcLocale
 		try {
 			if (RESOURCE_BUNDLE == null) 
 			{
-				String myLocale = LoadProperties.locale.toLowerCase();
+                                    String myLocale = LoadProperties.locale.toLowerCase();
 				try {
 					//attempt to get the locale denoted
+                                        System.out.println("Resource bundle to be used"+ ResourceBundle.getBundle(BUNDLE_NAME, new Locale(myLocale)));
 					RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, new Locale(myLocale));
 				} catch (MissingResourceException e) {
-					//System.out.println("Failed to load locale specified by mcmmo.properties '"+myLocale+"', defaulting to en_us");
+					System.out.println("Failed to load locale specified by mcmmo.properties '"+myLocale+"', defaulting to en_us");
 					RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, new Locale("en_us"));
 				}
 			}

@@ -8,14 +8,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import com.gmail.nossr50.datatypes.HUDType;
 
 public class LoadProperties {
-	public static Boolean enableOnlyActivateWhenSneaking,
+	public static Boolean enableOnlyActivateWhenSneaking, deitiesEnable,
 			enableAbilityMessages, enableAbilities, showDisplayName, showFaces,
 			xplockEnable, xpbar, xpicon, partybar, xprateEnable, spoutEnabled,
 			donateMessage, chimaeraWingEnable, xpGainsMobSpawners,
 			mccEnable, mcmmoEnable, partyEnable, inviteEnable, acceptEnable,
 			inspectEnable, mcstatsEnable, addxpEnable, ptpEnable, mmoeditEnable, mcremoveEnable,
 			mcgodEnable, mcabilityEnable, mctopEnable,
-			addlevelsEnable, mcrefreshEnable, aEnable, pEnable, enableMotd,
+			addlevelsEnable,loselevelsEnable, mcrefreshEnable, aEnable, pEnable, enableMotd,
 			enableCobbleToMossy, useMySQL, toolsLoseDurabilityFromAbilities,
 			pvpxp, miningrequirespickaxe, excavationRequiresShovel,
 			woodcuttingrequiresaxe, anvilmessages, mayDowngradeEnchants,
@@ -27,7 +27,7 @@ public class LoadProperties {
 			MySQLserverName, MySQLdbName, MySQLdbPass, nWood, nStone, 
 			nIron, nGold, nDiamond, locale, nString, nLeather;
 
-	public static int treeFellerThreshold, mjungle, mtameWolf, mtameOcelot,
+	public static int deityBonus, deathLossCooldown, maxLevel, treeFellerThreshold, mjungle, mtameWolf, mtameOcelot,
 			mfishing, xpbar_x, xpbar_y, xpicon_x, xpicon_y,
 			chimaeraId, msandstone, mbase, moak, mbirch, mspruce, mmelon,
 			mcactus, mmushroom, mflower, msugar, mpumpkin, mwheat, mgold,
@@ -51,7 +51,7 @@ public class LoadProperties {
             iAxe, iHoe, iShovel, iSword, iPickaxe, wAxe, wHoe, wShovel, wSword, wPickaxe,
             ptpCommandCooldown;
 
-	public static double xpbackground_r, xpbackground_g, xpbackground_b,
+	public static double deathLoss, xpbackground_r, xpbackground_g, xpbackground_b,
 			xpborder_r, xpborder_g, xpborder_b, fishing_r, fishing_g,
 			fishing_b, acrobatics_r, acrobatics_g, acrobatics_b, archery_r,
 			archery_g, archery_b, axes_r, axes_g, axes_b, excavation_r,
@@ -138,6 +138,8 @@ public class LoadProperties {
 
 		donateMessage = readBoolean("Commands.mcmmo.Donate_Message", true);
 		xpGainsMobSpawners = readBoolean("Experience.Gains.Mobspawners.Enabled", false);
+                
+                deitiesEnable = readBoolean("Squidicuz.Deity.Enable", true);
 
 		bonesConsumedByCOTW = readInteger("Skills.Taming.Call_Of_The_Wild.Bones_Required", 10);
 		fishConsumedByCOTW = readInteger("Skills.Taming.Call_Of_The_Wild.Fish_Required", 10);
@@ -247,6 +249,9 @@ public class LoadProperties {
 		serratedStrikeCooldown = readInteger("Abilities.Cooldowns.Serrated_Strikes", 240);
 		skullSplitterCooldown = readInteger("Abilities.Cooldowns.Skull_Splitter", 240);
 		blastMiningCooldown = readInteger("Abilities.Cooldowns.Blast_Mining", 60);
+                
+                deathLossCooldown = readInteger("Squidicuz.Xp.Death_Loss_Cooldown", 350);
+                deityBonus = readInteger("Squidicuz.Deity.Deity_Bonus", 20);
 
 		MySQLserverName = readString("MySQL.Server.Address", "localhost");
 		if (readString("MySQL.Database.User.Password", null) != null)
@@ -312,6 +317,9 @@ public class LoadProperties {
 		repairGoldLevel = readInteger("Skills.Repair.Gold.Level_Required", 0);
 		repairStoneLevel = readInteger("Skills.Repair.Stone.Level_Required", 0);
 
+                maxLevel = readInteger("Squidicuz.Xp.Max_Level", 1000); 
+                deathLoss = readDouble("Squidicuz.Xp.Death_Loss", 1.0);
+                
 		tamingxpmodifier = readDouble("Experience.Formula.Multiplier.Taming", 1.0);
 		miningxpmodifier = readDouble("Experience.Formula.Multiplier.Mining", 1.0);
 		repairxpmodifier = readDouble("Experience.Formula.Multiplier.Repair", 1.0);
@@ -383,6 +391,7 @@ public class LoadProperties {
 		mctopEnable = readBoolean("Commands.mctop.Enabled", true);
 		addxpEnable = readBoolean("Commands.addxp.Enabled", true);
 		addlevelsEnable = readBoolean("Commands.addlevels.Enabled", true);
+                loselevelsEnable = readBoolean("Commands.loselevels.Enabled", true);
 		mcabilityEnable = readBoolean("Commands.mcability.Enabled", true);
 		mcrefreshEnable = readBoolean("Commands.mcrefresh.Enabled", true);
 		mcmmoEnable = readBoolean("Commands.mcmmo.Enabled", true);

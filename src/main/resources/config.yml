@@ -66,6 +66,18 @@ Items:
         Sword: 0
         Pickaxe: 0
 
+Squidicuz:
+  #maxLevel = readInteger("Squidicuz.Xp.Max_Level", 1000);
+  #deathLoss = readDouble("Squidicuz.Xp.Death_Loss", 1.0);
+  #Squidicuz.Xp.Death_Loss_Cooldown
+    Xp:
+        Max_Level: 1000
+        Death_Loss: 1.0
+        Death_Loss_Cooldown: 350
+    Deity:
+        Deity_Bonus: 20
+        Enable: true
+  
 #
 #  Settings for Arcane Forging
 ###
@@ -301,7 +313,7 @@ Commands:
     mcability:
         Enabled: true
     party:
-        Enabled: true
+        Enabled: false
     xprate:
         Enabled: true
     mcgod:
@@ -314,6 +326,8 @@ Commands:
     addxp:
         Enabled: true
     addlevels:
+        Enabled: true
+    loselevels:
         Enabled: true
     ptp:
         Enabled: true

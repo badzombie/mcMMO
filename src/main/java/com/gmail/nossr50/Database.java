@@ -61,13 +61,21 @@ public class Database {
      * Attempt to create the database structure.
      */
     public void createStructure() {
+//        write("CREATE TABLE IF NOT EXISTS `" + LoadProperties.MySQLtablePrefix + "deities` (`deity` varchar(100) NOT NULL,"
+//                + "`firstPos` varchar(50) NOT NULL DEFAULT '',"
+//                + "`secondPos` varchar(50) NOT NULL DEFAULT '',"
+//                + "`firstNeg` varchar(50) NOT NULL DEFAULT '',"
+//                + "`SecondNeg` varchar(50) NOT NULL DEFAULT '',"
+//                + "PRIMARY KEY (`deity`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
         write("CREATE TABLE IF NOT EXISTS `" + LoadProperties.MySQLtablePrefix + "huds` (`user_id` int(10) unsigned NOT NULL,"
                 + "`hudtype` varchar(50) NOT NULL DEFAULT '',"
+                + "`deity` varchar(100) NOT NULL DEFAULT '',"
                 + "PRIMARY KEY (`user_id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
         write("CREATE TABLE IF NOT EXISTS `" + LoadProperties.MySQLtablePrefix + "users` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT,"
                 + "`user` varchar(40) NOT NULL,"
                 + "`lastlogin` int(32) unsigned NOT NULL,"
                 + "`party` varchar(100) NOT NULL DEFAULT '',"
+                + "'deity' varchar(100) NOT NULL DEFAULT '',"
                 + "PRIMARY KEY (`id`),"
                 + "UNIQUE KEY `user` (`user`)) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;");
         write("CREATE TABLE IF NOT EXISTS `" + LoadProperties.MySQLtablePrefix + "cooldowns` (`user_id` int(10) unsigned NOT NULL,"
@@ -239,6 +247,43 @@ public class Database {
         }
         return result;
     }
+    
+       public String getString(String sql) {
+        ResultSet rs = null;
+        String result = "";
+
+        if (conn != null) {
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt = conn.prepareStatement(sql);
+                if (stmt.executeQuery() != null) {
+                    stmt.executeQuery();
+                    rs = stmt.getResultSet();
+                    if (rs.next()) {
+                        result = rs.getString(1);
+                    }
+                    else {
+                        result = "";
+                    }
+                }
+            }
+            catch (SQLException ex) {
+                printErrors(ex);
+            }
+        }
+        else {
+            isConnected = false;
+            connect(); //Attempt to reconnect
+            if (isConnected) {
+                getInt(sql); //Try the same operation again now that we are connected
+            }
+            else {
+                System.out.println("[mcMMO] Unable to connect to MySQL! Make sure the SQL server is online!");
+            }
+        }
+        return result;
+    }
+
 
     /**
      * Read SQL query.

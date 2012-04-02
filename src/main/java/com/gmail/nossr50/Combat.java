@@ -41,8 +41,8 @@ public class Combat {
      */
     public static void combatChecks(EntityDamageByEntityEvent event, mcMMO plugin) {
         if (event.getDamage() == 0 || event.getEntity().isDead()) {
-            return;
-        }
+                    return;
+            }
 
         Entity damager = event.getDamager();
         LivingEntity target = (LivingEntity) event.getEntity();

@@ -1,5 +1,6 @@
 package com.gmail.nossr50;
 
+import com.gmail.nossr50.commands.general.McDeityCommand;
 import com.gmail.nossr50.datatypes.PlayerProfile;
 import com.gmail.nossr50.datatypes.SkillType;
 import com.gmail.nossr50.commands.skills.*;
@@ -413,7 +414,7 @@ public class mcMMO extends JavaPlugin {
         if (LoadProperties.addlevelsEnable) {
             getCommand("addlevels").setExecutor(new AddlevelsCommand(this));
         }
-
+        
         if (LoadProperties.mmoeditEnable) {
             getCommand("mmoedit").setExecutor(new MmoeditCommand(this));
         }
@@ -421,7 +422,12 @@ public class mcMMO extends JavaPlugin {
         if (LoadProperties.inspectEnable) {
             getCommand("inspect").setExecutor(new InspectCommand(this));
         }
-
+        if (LoadProperties.loselevelsEnable) {
+            getCommand("loselevels").setExecutor(new LoselevelsCommand());
+        }
+        if (LoadProperties.deitiesEnable) {
+            getCommand("deity").setExecutor(new McDeityCommand());
+        }
         if (LoadProperties.xprateEnable) {
             getCommand("xprate").setExecutor(new XprateCommand());
         }
