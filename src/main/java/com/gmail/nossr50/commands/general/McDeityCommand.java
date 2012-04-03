@@ -90,7 +90,7 @@ public class McDeityCommand implements CommandExecutor{
                                 sender.sendMessage("This command requires permissions. Only Admins may create deities");
                                 return true;
                             }
-                            if(args.length>6){
+                            if(args.length!=6){
                                 player.sendMessage(ChatColor.RED + " Usage: /deity create deityname PositiveSkill PositiveSkill NegativeSkill NegativeSkill");
                                 return true;
                             }
@@ -261,6 +261,7 @@ public class McDeityCommand implements CommandExecutor{
                             FileReader file = new FileReader(location);
                             BufferedReader in = new BufferedReader(file);
                             StringBuilder writer = new StringBuilder();
+                            
                             String line = "";
 
                             //While not at the end of the file

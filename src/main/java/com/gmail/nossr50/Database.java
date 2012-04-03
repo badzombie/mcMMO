@@ -69,7 +69,6 @@ public class Database {
 //                + "PRIMARY KEY (`deity`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
         write("CREATE TABLE IF NOT EXISTS `" + LoadProperties.MySQLtablePrefix + "huds` (`user_id` int(10) unsigned NOT NULL,"
                 + "`hudtype` varchar(50) NOT NULL DEFAULT '',"
-                + "`deity` varchar(100) NOT NULL DEFAULT '',"
                 + "PRIMARY KEY (`user_id`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
         write("CREATE TABLE IF NOT EXISTS `" + LoadProperties.MySQLtablePrefix + "users` (`id` int(10) unsigned NOT NULL AUTO_INCREMENT,"
                 + "`user` varchar(40) NOT NULL,"
